@@ -1,0 +1,72 @@
+﻿@model WarApp.Models.tblWAR_Accomplishments
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>tblWAR_Accomplishments</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.lutWAR_AccStatus.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lutWAR_AccStatus.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lutWAR_Projects.ProjectName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lutWAR_Projects.ProjectName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tblER_Employee.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tblER_Employee.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Accomplishment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Accomplishment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WeekEndingDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WeekEndingDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccArchieve)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccArchieve)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

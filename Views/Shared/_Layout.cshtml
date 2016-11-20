@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <!--BEGIN - WAR Header Graphic -->
+    <center>
+        <img src="~/Content/Images/WAR_Header.png" alt="Weekly Activity Report Header Graphic" />
+    </center>
+    <!-- END - WAR Header Graphic  -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <!-- inline style added to div to set width of header -->
+        <div class="container" style="width:1024px">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- Displays Appliation name [Weekly Activity Report] title text above header graphic on page-->
+                @Html.ActionLink("Weekly Activity Report", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+
+    </div>
+    <!--<div class="container-body-content">-->
+    <!-- BEGIN BODY CONTAINER CODE -->
+
+    @RenderBody()
+    <hr />
+    <footer>
+        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+    </footer>
+    <!--BEGIN - Footer Graphic -->
+    <img src="~/Content/Images/Footer.png" />
+    <!--END -  Footer Graphic-->
+    <!--</div>-->
+    <!-- END BODY CONTAINER CODE -->
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

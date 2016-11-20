@@ -1,0 +1,99 @@
+﻿@model IEnumerable<WarApp.Models.tblER_Employee>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.lutER_Branch.BranchName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lutER_Directorate.DirectorateName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lutER_Division.DivisionName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lutER_Location.LocationName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lutER_Organization.OrganizationalName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lutER_Role.RoleType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lutWAR_Projects.ProjectName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmpArchive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Matrixed)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.lutER_Branch.BranchName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lutER_Directorate.DirectorateName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lutER_Division.DivisionName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lutER_Location.LocationName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lutER_Organization.OrganizationalName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lutER_Role.RoleType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lutWAR_Projects.ProjectName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmailAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmpArchive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Matrixed)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.EmpId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.EmpId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.EmpId })
+        </td>
+    </tr>
+}
+
+</table>

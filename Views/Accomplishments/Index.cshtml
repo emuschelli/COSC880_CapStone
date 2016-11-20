@@ -1,0 +1,63 @@
+﻿@model IEnumerable<WarApp.Models.tblWAR_Accomplishments>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.lutWAR_AccStatus.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lutWAR_Projects.ProjectName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tblER_Employee.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Accomplishment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WeekEndingDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AccArchieve)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.lutWAR_AccStatus.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lutWAR_Projects.ProjectName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tblER_Employee.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Accomplishment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WeekEndingDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccArchieve)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AccomoplishmentId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AccomoplishmentId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AccomoplishmentId })
+        </td>
+    </tr>
+}
+
+</table>

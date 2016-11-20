@@ -1,0 +1,26 @@
+﻿@model WarApp.Models.lutER_Directorate
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>lutER_Directorate</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DirectorateName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DirectorateName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DirectorateId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
