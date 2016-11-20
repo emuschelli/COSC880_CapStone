@@ -1,0 +1,66 @@
+﻿@model WarApp.Models.tblWAR_Accomplishments
+
+@{
+    ViewBag.Title = "WAR Accomplishment Details";
+}
+
+<h2>WAR Accomplishment Details</h2>
+
+<div>
+    <h4>WAR Accomplishments</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.lutWAR_AccStatus.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lutWAR_AccStatus.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lutWAR_Projects.ProjectName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lutWAR_Projects.ProjectName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tblER_Employee.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tblER_Employee.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Accomplishment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Accomplishment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WeekEndingDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WeekEndingDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccArchieve)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccArchieve)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.AccomoplishmentId })*@
+    @Html.ActionLink("Back to List", "Index")
+</p>
