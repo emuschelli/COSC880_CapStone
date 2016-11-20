@@ -1,0 +1,66 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background-color:#917B4C;
+    font-family: Arial, Franklin Gothic Book;
+	font-size: 12px;
+	color: #000000;
+    width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
+    align-content:center;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+/*Header Styles - Erica Muschelli*/
+h1, h2, h3 {
+	margin: 0px;
+	padding: 0px;
+	font-family: Arial, Franklin Gothic Medium;
+	font-weight: 400;
+	font-weight: bold;
+	font-style: italic;
+}
+
+h1 {
+	font-size: 3em;
+}
+
+h2 {
+	font-size: 2.4em;
+}
+
+h3 {
+	font-size: 1.6em;
+}
+
+
+/*Link Styles - Erica Muschelli*/
+a {
+	/*text-decoration: none;*/
+	color: #0000FF;
+	font-weight:bold;
+	
+}
+
+a:hover {
+}
+
