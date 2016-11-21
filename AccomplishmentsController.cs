@@ -11,6 +11,7 @@ using WarApp.Models;
 
 namespace WarApp.Controllers
 {
+    [Authorize]
     public class AccomplishmentsController : Controller
     {
         private WarAppDBContext db = new WarAppDBContext();
