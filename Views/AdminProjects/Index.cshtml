@@ -1,33 +1,47 @@
 ﻿@model IEnumerable<WarApp.Models.lutWAR_Projects>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Current Project";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<table class="table" style="background-color: #ffffff;">
+<tr>
+    <td colspan="2">
+        <h2>Current Project</h2>
+        <br />
+        <p>
+            @Html.ActionLink("Create/Add New Project", "Create")
+        </p>
+    </td>
+</tr>
     <tr>
         <th>
+            <nobr>
+           @Html.DisplayName("Project Name")
+            </nobr>
+            @*
             @Html.DisplayNameFor(model => model.ProjectName)
+            *@
         </th>
         <th></th>
     </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProjectName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProjId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProjId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ProjId })
-        </td>
-    </tr>
-}
-
+    
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <nobr>
+                    @*@Html.DisplayName("Project Name")*@
+                    
+                    @Html.DisplayFor(modelItem => item.ProjectName)
+                    
+                </nobr>
+            </td>
+            <td width="100%">
+                @Html.ActionLink("Edit", "Edit", new { id = item.ProjId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ProjId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ProjId })
+            </td>
+        </tr>
+    }
 </table>

@@ -1,0 +1,36 @@
+﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+@{
+    ViewBag.Title = "Create/Add New Role";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<table style="background-color:#FFFFFF; padding: 5px;width:100%" cellpadding="6" cellspacing="6">
+    <tr>
+        <td align="left" with="100%" colspan="2">
+            <h2> Add New User Role/Permissions for WAR Application</h2>
+        </td>
+    </tr>
+    <tr>
+        <td align="left" padding-right:10;">
+            <b>Enter User Role Name</b>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.EditorFor(m => m.Name)
+        </td>
+        <td width="100%" align="left">
+            <input type="submit" id="submit" value="Create Role" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.ActionLink("Back to List", "Index")
+        </td>
+    </tr>
+</table>
+    }

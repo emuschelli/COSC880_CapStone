@@ -28,9 +28,32 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <!-- Displays menu options based on User Role. -->
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <!-- Example Link format:  Html.ActionLink("link text", "someaction", "somecontroller", new { id = "123" }, null)  -->
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        <li>@Html.ActionLink("Manage Role", "Index", "Role")</li>
+                        <li>@Html.ActionLink("Manage Projects", "Index", "AdminProjects")</li>
+                        @*<li>@Html.ActionLink("Add Users", "Register", "Account")</li>*@
+                        <li>@Html.ActionLink("Admin", "Index", "Account")</li>
+                    }
+                    else if (User.IsInRole("Employee"))
+                    {
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        <li>@Html.ActionLink("View Accomplishments", "Index", "Accomplishments")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        //<li>@Html.ActionLink("View Accomplishments", "Index", "Accomplishments")</li>
+                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
