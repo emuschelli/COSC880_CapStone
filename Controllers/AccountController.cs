@@ -9,20 +9,31 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using WarApp.Models;
+using System.Collections.Generic; //IMPORTED NAMESPACE FOR INDEX METHOD
+using static WarApp.Controllers.ManageController;
 
 namespace WarApp.Controllers
 {
+    //THIS CONTROLLER HANDLES THE LOG ON AND REGISER URL.
+    //THIS CONTROLLER IMPLEMENTS SUPPORT FOR BOTH LOCAL ACCOUNTS AND EXTERNAL ACCOUNT MANAGED BY OPENID ND OAUTH AUTHENTICATION.
+    //SECURITY - THIS CONTROLLER CHECKS TO ENSURE POST-LOGON URL IS LOCAL TO THE APPLICATION PREVENTING AGAINST OPEN REDIRECTION ATTACKS.
     [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        //Begin - New content added to display user name - identity/role functionality
+        ApplicationDbContext context;
+        //END - New content added to display user name - identity/role functionality
 
         public AccountController()
         {
+            //BEGIN - New content added to display user name - identity/role functionality
+            context = new ApplicationDbContext();
+            //END - New content added to display user name - identity/role functionality
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +45,9 @@ namespace WarApp.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -52,7 +63,6 @@ namespace WarApp.Controllers
             }
         }
 
-        //
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -75,7 +85,7 @@ namespace WarApp.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -104,6 +114,7 @@ namespace WarApp.Controllers
             return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 
+
         //
         // POST: /Account/VerifyCode
         [HttpPost]
@@ -120,7 +131,7 @@ namespace WarApp.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -131,47 +142,203 @@ namespace WarApp.Controllers
                 default:
                     ModelState.AddModelError("", "Invalid code.");
                     return View(model);
-            }
+           }
         }
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles = "Admin")] //PREVENTS ANONYMOUS ACCESS
         public ActionResult Register()
         {
+            ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin")).ToList(), "Name", "Name");
             return View();
         }
 
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles = "Admin")] //PREVENTS ANONYMOUS ACCESS
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                // Add the following to populate the new user properties
+                // from the ViewModel data:
+                //var user = new ApplicationUser()
+                //{
+                //    UserName = model.UserName,
+                //    FirstName = model.FirstName,
+                //    LastName = model.LastName,
+                //    Email = model.Email
+                //};
+                var user = model.GetUser();
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    ////Assign Role to user Here
+                    //await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
+                    ////await SignInAsync(user, isPersistent: false);
+                    /////Ends Here
                     return RedirectToAction("Index", "Home");
                 }
-                AddErrors(result);
+                //else
+                //{
+                //    AddErrors(result);
+                //}
+                //ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin")).ToList(), "Name", "Name");
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+
+            //*if (ModelState.IsValid)
+            //*{
+            //    *var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+            //    *var result = await UserManager.CreateAsync(user, model.Password);
+            //    *if (result.Succeeded)
+            //    *{
+            //        *await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+            //        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+            //        // Send an email with this link
+            //        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            //        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+            //        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+            //        //Assign Role to user Here   
+            //        *await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
+            //        //Ends Here 
+            //        *return RedirectToAction("Index", "Users");
+            //    }
+            //    ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin")).ToList(), "Name", "Name");
+            //    AddErrors(result);
+            //}
+
+            //// If we got this far, something failed, redisplay form
+            //return View(model);
         }
 
+        //ADDED NEW INDEX METHOD TO VIEW LIST OF APPLICATION USERS 
+       [Authorize(Roles = "Admin")]
+        public ActionResult Index()
+        {
+            //PASS ApplicationUser INSTANCE INTO CONSTRUCTOR EditUserViewModel
+            var Db = new ApplicationDbContext();
+            var users = Db.Users;
+            var model = new List<EditUserViewModel>();
+            foreach (var user in users)
+            {
+                var u = new EditUserViewModel(user);
+                model.Add(u);
+            }
+            return View(model);
+        }
+        //ADDED NEW EDIT METHOD TO VIEW LIST OF APPLICATION USERS - ALLOW FOR EDIT
+        //USE LINQ TO GRAB A SPECIFIC USED BASED ON UserName AND PASS IT AS A PARAMETER
+        //POPULATE INSTANCE AND PASS TO CONSTRUCTOR EditUserViewModel
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit(string id, ManageMessageId? Message = null)
+        {
+            var Db = new ApplicationDbContext();
+            var user = Db.Users.First(u => u.UserName == id);
+            var model = new EditUserViewModel(user);
+            ViewBag.MessageId = Message;
+            return View(model);
+        }
+
+        //ADDED NEW EDIT METHOD TO VIEW LIST OF APPLICATION USERS - ALLOW FOR EDIT
+        //RETRIEVE USER RECORD, UPDATE, AND SAVE.
+        //NOTE: UserName IS NOT EDITABLE
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(EditUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var Db = new ApplicationDbContext();
+                var user = Db.Users.First(u => u.UserName == model.UserName);
+                // UPDATE DATA
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Email = model.Email;
+                Db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                //SAVE CHANGES
+                await Db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            // IF WE GET HERE... SOMETHING FAILED - REDISPLAY FORM
+            return View(model);
+        }
+
+        //ADDED NEW DELETE METHOD TO VIEW LIST OF APPLICATION USERS - TO DELETE USER
+        //id PASSED IS UserName - USED TO LOCATE USER IN THE DATABASE
+        //REUSED EditUserViewMode TO PASS DATA TO Delete METHOD
+        [Authorize(Roles = "Admin")]
+        public ActionResult Delete(string id = null)
+        {
+            var Db = new ApplicationDbContext();
+            var user = Db.Users.First(u => u.UserName == id);
+            var model = new EditUserViewModel(user);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(model);
+        }
+
+        //ADDED NEW DELETE METHOD TO VIEW LIST OF APPLICATION USERS - TO DELETE USER
+        //id PASSED IS UserName - USED TO LOCATE USER IN THE DATABASE
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public ActionResult DeleteConfirmed(string id)
+        {
+            var Db = new ApplicationDbContext();
+            var user = Db.Users.First(u => u.UserName == id);
+            Db.Users.Remove(user);
+            Db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        //ADDED NEW UserRoles METHOD - ASSIGN USER TO ROLE
+        //id PASSED IS UserName - USED TO LOCATE USER IN THE DATABASE
+        //SelectUserRolesViewMode IS INITIALIZED PASSING ApplicationUser DATA TO THE CONSTRUCTOR
+        [Authorize(Roles = "Admin")]
+        public ActionResult UserRoles(string id)
+        {
+            var Db = new ApplicationDbContext();
+            var user = Db.Users.First(u => u.UserName == id);
+            var model = new SelectUserRolesViewModel(user);
+            return View(model);
+        }
+
+        //ADDED NEW UserRoles METHOD - ASSIGN USER TO ROLE
+        //id PASSED IS UserName - USED TO LOCATE USER IN THE DATABASE
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public ActionResult UserRoles(SelectUserRolesViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var idManager = new IdentityManager();
+                var Db = new ApplicationDbContext();
+                var user = Db.Users.First(u => u.UserName == model.UserName);
+                idManager.ClearUserRoles(user.Id);
+                foreach (var role in model.Roles)
+                {
+                    if (role.Selected)
+                    {
+                        idManager.AddUserToRole(user.Id, role.RoleName);
+                    }
+                }
+                return RedirectToAction("index");
+            }
+            return View();
+        }
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
@@ -231,7 +398,8 @@ namespace WarApp.Controllers
 
         //
         // GET: /Account/ResetPassword
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize]
         public ActionResult ResetPassword(string code)
         {
             return code == null ? View("Error") : View();
@@ -240,7 +408,8 @@ namespace WarApp.Controllers
         //
         // POST: /Account/ResetPassword
         [HttpPost]
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles = "Admin,Supervisor,Employee")] //PREVENTS ANONYMOUS ACCESS
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
@@ -265,7 +434,8 @@ namespace WarApp.Controllers
 
         //
         // GET: /Account/ResetPasswordConfirmation
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles = "Admin,Supervisor,Employee")] //PREVENTS ANONYMOUS ACCESS
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
@@ -316,6 +486,7 @@ namespace WarApp.Controllers
             }
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
         }
+
 
         //
         // GET: /Account/ExternalLoginCallback
@@ -449,7 +620,7 @@ namespace WarApp.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Users");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

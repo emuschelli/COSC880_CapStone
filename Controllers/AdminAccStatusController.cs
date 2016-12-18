@@ -10,12 +10,15 @@ using WarApp.Models;
 
 namespace WarApp.Controllers
 {
+
+    [Authorize(Roles = "Admin")] //PREVENTS ANONYMOUS ACCESS
     public class AdminAccStatusController : Controller
     {
+        
         private WarAppDBContext db = new WarAppDBContext();
 
         // GET: AdminAccStatus
-        public ActionResult Index()
+       public ActionResult Index()
         {
             return View(db.lutWAR_AccStatus.ToList());
         }

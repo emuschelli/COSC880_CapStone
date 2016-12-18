@@ -8,6 +8,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WarApp.Models
 {
+    //use the authorize attribute to require login
+    [System.Web.Mvc.Authorize]
     public class lutWAR_AccStatus
     {
         //PRIMARY KEY

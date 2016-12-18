@@ -78,3 +78,7 @@ C:\Users\emusc_000\Documents\Visual Studio 2015\Projects\WarApp\WarApp\bin\Micro
 C:\Users\emusc_000\Documents\Visual Studio 2015\Projects\WarApp\WarApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\emusc_000\Documents\Visual Studio 2015\Projects\WarApp\WarApp\obj\Debug\WarApp.dll
 C:\Users\emusc_000\Documents\Visual Studio 2015\Projects\WarApp\WarApp\obj\Debug\WarApp.pdb
+C:\Users\emusc_000\Documents\Visual Studio 2015\Projects\WarApp\WarApp\obj\Debug\WarApp.Migrations.InitialCreate.resources
+C:\Users\emusc_000\Documents\Visual Studio 2015\Projects\WarApp\WarApp\obj\Debug\WarApp.csproj.GenerateResource.Cache
+C:\Users\emusc_000\Documents\Visual Studio 2015\Projects\WarApp\WarApp\obj\Debug\WarApp.Migrations.Init.resources
+C:\Users\emusc_000\Documents\Visual Studio 2015\Projects\WarApp\WarApp\bin\ApplicationInsights.config

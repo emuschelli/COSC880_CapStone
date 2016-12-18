@@ -15,14 +15,14 @@ namespace WarApp.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Why the WAR?";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "For Technical Support, please contact the Technical Support Team.";
 
             return View();
         }

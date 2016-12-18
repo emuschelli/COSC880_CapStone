@@ -8,7 +8,7 @@
  * files not expressly granted by Microsoft, whether by implication, estoppel
  * or otherwise. The notices and licenses below are for informational purposes only.
  *
- * : END LICENSE TEXT */
+ * NUGET: END LICENSE TEXT */
 /*!
  * Bootstrap v3.0.0
  *
@@ -316,7 +316,6 @@ body {
   line-height: 1.428571429;
   color: #333333;
   background-color: #ffffff;
-  width:1024px;
 }
 
 input,

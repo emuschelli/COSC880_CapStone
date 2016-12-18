@@ -10,6 +10,7 @@ using WarApp.Models;
 
 namespace WarApp.Controllers
 {
+    [Authorize(Roles = "Admin")] //PREVENTS ANONYMOUS ACCESS
     public class AdminLocationController : Controller
     {
         private WarAppDBContext db = new WarAppDBContext();

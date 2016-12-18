@@ -1,63 +1,109 @@
 ﻿@model IEnumerable<WarApp.Models.tblWAR_Accomplishments>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "WAR Accomplishments";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<table style="background-color:#FFFFFF; padding: 5px;width:100%" cellpadding="6" cellspacing="6">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.lutWAR_AccStatus.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.lutWAR_Projects.ProjectName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.tblER_Employee.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Accomplishment)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.WeekEndingDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AccArchieve)
-        </th>
-        <th></th>
-    </tr>
+        <td align="left" with="100%">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.lutWAR_AccStatus.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.lutWAR_Projects.ProjectName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tblER_Employee.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Accomplishment)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WeekEndingDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AccArchieve)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.AccomoplishmentId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.AccomoplishmentId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AccomoplishmentId })
-        </td>
-    </tr>
-}
+            <h2>WAR Accomplishments</h2>
+            <br />
+            <p>
+                @Html.ActionLink("Create New Accomplishment", "Create")
+            </p>
+            @using (Html.BeginForm())
+            {
+                <p>
+                    <!--Notice the URL doesn't contain the value search string, which means that if you bookmark this page, you won't get the filtered list when you use the bookmark. -->
+                    Search By Project: @Html.TextBox("SearchString")
+                    <input type="submit" value="Search" />
+                </p>
+            }
 
-</table>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.lutWAR_AccStatus.Status)
+                    </th>
+                    <th>
+                        @*@Html.DisplayNameFor(model => model.lutWAR_Projects.ProjectName)*@
+                        @Html.ActionLink("Project Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+                    </th>
+                    <!-- HIDE UNTIL ACCOUNT USER VIEWING THEIR OWN ACCOMPLISHMENT FUNCTIONALITY IS IMPLEMENTED 
+                    @*
+                    <th>
+                        @Html.DisplayName("First Name")
+                        @*
+                        @Html.DisplayNameFor(model => model.tblER_Employee.FirstName)
+                    </th>
+                    *@
+                    -->
+                    <th>
+                        @Html.DisplayNameFor(model => model.Accomplishment)
+                    </th>
+                    <th>
+                        @*Html.DisplayNameFor(model => model.WeekEndingDate)*@
+                        @Html.ActionLink("Weekend Ending Date", "Index", new { sortOrder = ViewBag.DateSortParm })
+                    </th>
+                    <th>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @Html.DisplayName("Archived?")
+                        @*
+                        @Html.DisplayNameFor(model => model.AccArchieve)
+                        *@
+                    }
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.lutWAR_AccStatus.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.lutWAR_Projects.ProjectName)
+                        </td>
+                         <!-- HIDE UNTIL ACCOUNT USER VIEWING THEIR OWN ACCOMPLISHMENT FUNCTIONALITY IS IMPLEMENTED 
+                         @*
+                        <td>
+                            @Html.DisplayFor(modelItem => item.tblER_Employee.FirstName)
+                        </td>
+                        *@
+                        -->
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Accomplishment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.WeekEndingDate)
+                        </td>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AccArchieve)
+                        </td>
+                         }
+                        <td>
+                            @if (item.lutWAR_AccStatus.Status == "Submitted")
+                {
+                                @Html.ActionLink("Details View Only", "Details", new { id = item.AccomoplishmentId })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { id = item.AccomoplishmentId }) <b>&nbsp;|&nbsp;</b>
+                                @Html.ActionLink("Details", "Details", new { id = item.AccomoplishmentId }) <b>&nbsp;|&nbsp;</b>
+                                @Html.ActionLink("Delete", "Delete", new { id = item.AccomoplishmentId }) <b>&nbsp;|&nbsp;</b>
+                            }
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            </td>
+        </tr>
+    </table>

@@ -7,6 +7,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WarApp.Models
 {
+    //use the authorize attribute to require login
+    [System.Web.Mvc.Authorize]
     public class tblWAR_Accomplishments
     {
         //PRIMARY KEY
@@ -21,6 +23,8 @@ namespace WarApp.Models
 
         //TABLE FIELDS
         public virtual string Accomplishment { get; set; }
+
+        [DataType(DataType.Date)]
         public virtual DateTimeOffset WeekEndingDate { get; set; }
         public virtual bool AccArchieve { get; set; }
 
