@@ -54,3 +54,6 @@ C:\Users\emusc_000\Documents\Visual Studio 2015\Projects\WarApp\WarApp.Tests\bin
 C:\Users\emusc_000\Documents\Visual Studio 2015\Projects\WarApp\WarApp.Tests\obj\Debug\WarApp.Tests.csprojResolveAssemblyReference.cache
 C:\Users\emusc_000\Documents\Visual Studio 2015\Projects\WarApp\WarApp.Tests\obj\Debug\WarApp.Tests.dll
 C:\Users\emusc_000\Documents\Visual Studio 2015\Projects\WarApp\WarApp.Tests\obj\Debug\WarApp.Tests.pdb
+C:\Users\emusc_000\Documents\Visual Studio 2015\Projects\WarApp\WarApp.Tests\bin\Debug\ApplicationInsights.config
+C:\Users\emusc_000\documents\visual studio 2015\Projects\WarApp\WarApp.Tests\bin\Debug\WarApp.Tests.dll.CodeAnalysisLog.xml
+C:\Users\emusc_000\documents\visual studio 2015\Projects\WarApp\WarApp.Tests\bin\Debug\WarApp.Tests.dll.lastcodeanalysissucceeded
